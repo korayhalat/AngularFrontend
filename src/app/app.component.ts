@@ -7,8 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title: string = 'northwind';        //tip belirlemek için , :string gibi kullanıyoruz.
-  user: string = 'Koray Halat';
-  
+  user: string = 'Koray Halat'; 
 
 }
 
