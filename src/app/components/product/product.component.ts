@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Product } from 'src/app/models/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
+
 
 @Component({
   selector: 'app-product',
@@ -12,33 +15,49 @@ export class ProductComponent implements OnInit {
 
   products: Product[] = [];
   dataLoaded = false;
+  filterText="";
 
-  constructor(private productService: ProductService,
-    private activatedRoute: ActivatedRoute) { }
 
-  ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params=>{
-      if(params["categoryId"]){
-        this.getProductsByCategory(params["categoryId"])
-      }else{
-        this.getProducts();
-      }
-    })
+  constructor(private productService: ProductService,//Service leri kullanabilmek için buraya yazmalıyız.
+    private activatedRoute: ActivatedRoute, //kategoriden herhangibir kategoriye tıkladığımızda,adres çubuğunda oluşan adresin sonundaki category.id nin numarasını alnak için.
+    private toastrSrevice:ToastrService,
+    private cartService:CartService) {
 
   }
 
-  getProducts() {
-    this.productService.getProducts().subscribe(response => {
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe(params => {
+      if (params["categoryId"]) {
+        this.getProductsByCategory(params["categoryId"])
+      }
+      else {
+        this.getProducts();
+      }
+    })
+  }
+
+  getProducts() {   //Alt daki getProducts ın içi Observable olduğu için.sonrasında subscribe yapılmalı.
+    this.productService.getProducts().subscribe(response => {   //Burası asenkron çalışır.
       this.products = response.data
       this.dataLoaded = true;
+
     })
+
   }
   getProductsByCategory(categoryId: number) {
     this.productService.getProductsByCategory(categoryId).subscribe(response => {
       this.products = response.data
       this.dataLoaded = true;
+
     })
+
+  }
+  addToCart(product:Product){
+    if(product.productId===1){
+      this.toastrSrevice.error("Hata","Bu ürün sepete eklenemez!")
+    }else{
+    this.toastrSrevice.success("Sepete Eklendi",product.productName)
+    this.cartService.addToCart(product);
   }
 }
-
-
+}

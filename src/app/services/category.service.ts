@@ -1,20 +1,20 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http' //APi ye bağlanmak için yazmamız gerek.
 import { Observable } from 'rxjs';
-import { ListResponseModel } from '../models/listResponseModel';
 import { Category } from '../models/category';
+import { ListResponseModel } from '../models/listResponseModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 
-  apiUrl = "https://localhost:44314/api/categories/getall";
+  apiUrl = "http://localhost:56515/api/categories/getall"
 
-  constructor(private hhtpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { } //Api ye bağlamak için yaz.
 
   getCategories(): Observable<ListResponseModel<Category>> {
-    return this.hhtpClient.get<ListResponseModel<Category>>(this.apiUrl);
+    return this.httpClient.get<ListResponseModel<Category>>(this.apiUrl);
 
   }
 }

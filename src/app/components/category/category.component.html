@@ -1,7 +1,11 @@
 <ul class="list-group">
-  <li [class]= "getAllCategoryClass()" routerLink="/products">Tüm Ürünler</li>
+  <!--ul  listenin adı, li ise elemanlar-->
+  <!--[class]= yaptığımızda karşılığı componen.ts ndeki methodu calıştır demek.-->
+  <li [class]="getAllCategoryClass()" routerLink="/products">Tüm Ürünler</li>
+  <!--(cilck) komutu üstüne tıkladığında komutu. bunun için bir fonsiyon yazarsak. ts sayfasında method oluştrmak gerek-->
   <li (click)="setCurrentCategory(category)" routerLink="/products/category/{{category.categoryId}}"
     *ngFor="let category of categories" [class]="getCurrentCategoryClass(category)">
     {{category.categoryName}}</li>
 </ul>
-<h5 *ngIf="currentCategory">Seçiminiz : {{currentCategory.categoryName}} </h5>
+<!--Alttaki if kategoy de herhangi birşey seçmediğimiz durumda kategori listesi düzgün açılsın diye-->
+<h5 *ngIf="currentCategory">{{currentCategory.categoryName}} seçtiniz!!</h5>

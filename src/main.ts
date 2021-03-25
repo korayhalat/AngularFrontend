@@ -7,6 +7,6 @@ import { environment } from './environments/environment';
 if (environment.production) {
   enableProdMode();
 }
-
+//Burda hangi Module ile çalışayım sorusu.Aşağıdaki (AppModule) dür.
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));

@@ -11,33 +11,36 @@ export class CategoryComponent implements OnInit {
 
   categories: Category[] = [];
   currentCategory: Category;
-  constructor(private categoryService: CategoryService) { }
+
+  constructor(private categoryService: CategoryService) { } //Service kullanabilmek için buraya yaz.
 
   ngOnInit(): void {
     this.getCategories();
   }
+
   getCategories() {
     this.categoryService.getCategories().subscribe(response => {
       this.categories = response.data
-
     })
   }
-  setCurrentCategory(category: Category) {
+
+  setCurrentCategory(category: Category) { //html sayfasına yazdığımız fonksiyonu buraya yazıyoruz.
     this.currentCategory = category;
   }
-  getCurrentCategoryClass(category: Category) {
+
+  getCurrentCategoryClass(category: Category) { //seçtiğimiz kategoriyi aktif etmek için.
     if (category == this.currentCategory) {
+      return "list-group-item active "
+    }
+    else return "list-group-item"
+  }
+
+  getAllCategoryClass() {   //kategori listesinden seçim yaptığım zaman listeyi getirmek için.
+    if (!this.currentCategory) {
       return "list-group-item active"
-    }
-    else {
+    } else {
       return "list-group-item"
     }
   }
-  getAllCategoryClass(){
-    if(!this.currentCategory){
-      return"list-group-item active"
-    }else{
-      return "list-group-item"
-    }
-  }
+
 }
